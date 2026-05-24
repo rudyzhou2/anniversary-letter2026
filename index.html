@@ -793,7 +793,7 @@
 
 <script>
   // ── Password ──────────────────────────────────────────
-  const PASSWORD = '20200524';   // ← change this to whatever you like
+  const PASSWORD_HASH = 'MjAyMDA1MjQ='; // base64 encoded
 
   const cover   = document.getElementById('cover');
   const letter  = document.getElementById('letter');
@@ -802,7 +802,7 @@
   const pwError = document.getElementById('pwError');
 
   function tryUnlock() {
-    if (pwInput.value === PASSWORD) {
+    if (btoa(pwInput.value) === PASSWORD_HASH) {
       cover.classList.add('exiting');
       setTimeout(function() {
         cover.style.display = 'none';
