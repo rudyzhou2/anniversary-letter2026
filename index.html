@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六週年結婚紀念日</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --deep: #2d1f0e;
+    --gold: #b8882a;
+    --gold-light: #d4a84b;
+    --cream: #faf6ef;
+    --parchment: #f2ead8;
+    --red: #8b2020;
+  }
+
+  body {
+    background: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Noto Serif TC', serif;
+  }
+
+  /* ── Cover Page ── */
+  #cover {
+    max-width: 680px;
+    width: 100%;
+    min-height: 88vh;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 0 1px var(--gold), 0 0 0 8px var(--ink), 0 0 0 9px var(--gold), 0 40px 80px rgba(0,0,0,0.7);
+    animation: unfold 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    overflow: hidden;
+  }
+
+  /* Subtle radial glow on cover */
+  #cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(184,136,42,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 20% 80%, rgba(139,32,32,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Decorative border lines on cover */
+  #cover .cover-border {
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(184,136,42,0.2);
+    pointer-events: none;
+  }
+  #cover .cover-border-inner {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid rgba(184,136,42,0.08);
+    pointer-events: none;
+  }
+
+  .cover-corner {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    opacity: 0.6;
+  }
+  .cover-corner-tl { top: 22px; left: 22px; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+  .cover-corner-tr { top: 22px; right: 22px; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+  .cover-corner-bl { bottom: 22px; left: 22px; border-bottom: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+  .cover-corner-br { bottom: 22px; right: 22px; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+
+  .cover-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 60px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .cover-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.45em;
+    color: rgba(184,136,42,0.6);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .cover-ornament {
+    color: var(--gold);
+    font-size: 28px;
+    opacity: 0.5;
+    margin-bottom: 32px;
+    letter-spacing: 0.3em;
+  }
+
+  .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    max-width: 440px;
+  }
+
+  .cover-title strong {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--gold-light);
+    display: block;
+    font-size: 42px;
+    margin-top: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  .cover-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
+    width: 280px;
+  }
+  .cover-divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184,136,42,0.5), transparent);
+  }
+  .cover-divider-dot { color: var(--gold); font-size: 14px; opacity: 0.7; }
+
+  /* Password area */
+  .cover-lock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .cover-lock-icon {
+    font-size: 22px;
+    color: rgba(184,136,42,0.55);
+    margin-bottom: 4px;
+  }
+
+  .pw-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: rgba(184,136,42,0.6);
+    text-transform: uppercase;
+  }
+
+  .pw-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .pw-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(184,136,42,0.35);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.25em;
+    width: 180px;
+    text-align: center;
+    padding: 6px 4px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .pw-input::placeholder { color: rgba(184,136,42,0.25); letter-spacing: 0.15em; font-style: italic; }
+  .pw-input:focus { border-bottom-color: var(--gold); }
+
+  .pw-btn {
+    background: transparent;
+    border: 1px solid rgba(184,136,42,0.4);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .pw-btn:hover { background: rgba(184,136,42,0.1); border-color: var(--gold); }
+
+  .pw-error {
+    font-size: 12px;
+    color: #b85050;
+    letter-spacing: 0.15em;
+    font-style: italic;
+    height: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+  .pw-error.show { opacity: 1; }
+
+  .cover-footer {
+    position: absolute;
+    bottom: 44px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    color: rgba(184,136,42,0.3);
+    letter-spacing: 0.3em;
+  }
+
+  /* Cover exit animation */
+  @keyframes coverExit {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.96) translateY(-20px); }
+  }
+  #cover.exiting { animation: coverExit 0.55s cubic-bezier(0.4,0,1,1) forwards; }
+
+  /* Letter starts hidden */
+  #letter { display: none; width: 100%; }
+
+  .page {
+    background: var(--cream);
+    max-width: 680px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 0 1px var(--gold), 0 0 0 8px var(--ink), 0 0 0 9px var(--gold), 0 40px 80px rgba(0,0,0,0.6);
+    animation: unfold 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes unfold {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Decorative corner elements */
+  .corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    opacity: 0.5;
+  }
+  .corner-tl { top: 14px; left: 14px; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+  .corner-tr { top: 14px; right: 14px; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+  .corner-bl { bottom: 14px; left: 14px; border-bottom: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+  .corner-br { bottom: 14px; right: 14px; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+
+  .inner {
+    padding: 60px 64px 56px;
+    background-image: 
+      radial-gradient(ellipse at 20% 0%, rgba(184,136,42,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(139,32,32,0.03) 0%, transparent 60%);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .year-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .year-badge::before, .year-badge::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .year-badge::after { background: linear-gradient(to left, transparent, var(--gold)); }
+
+  .title {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+  }
+
+  .title-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-top: 8px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 28px 0;
+    animation: fadeUp 0.8s 0.45s both;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+  .divider-symbol {
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  /* Body */
+  .salutation {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--deep);
+    margin-bottom: 22px;
+    animation: fadeUp 0.8s 0.55s both;
+  }
+
+  .body-text {
+    font-size: 16px;
+    line-height: 2;
+    color: #3a2b18;
+    font-weight: 300;
+    animation: fadeUp 0.8s 0.65s both;
+  }
+
+  .body-text p {
+    margin-bottom: 18px;
+  }
+
+  /* Milestone cards */
+  .milestones {
+    margin: 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: fadeUp 0.8s 0.75s both;
+  }
+
+  .milestone {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+
+  .milestone-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    font-style: italic;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .milestone-text {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--deep);
+    font-weight: 400;
+  }
+
+  .closing-text {
+    font-size: 16px;
+    line-height: 2;
+    color: #3a2b18;
+    font-weight: 300;
+    margin-top: 20px;
+    animation: fadeUp 0.8s 0.85s both;
+  }
+
+  .closing-text p { margin-bottom: 18px; }
+
+  /* Signature area */
+  .signature {
+    margin-top: 40px;
+    text-align: right;
+    animation: fadeUp 0.8s 0.95s both;
+  }
+
+  .signature-line {
+    font-size: 15px;
+    color: var(--deep);
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  .signature-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--gold);
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Footer */
+  .footer-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 36px 0 24px;
+    animation: fadeUp 0.8s 1.0s both;
+  }
+
+  .date-stamp {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    animation: fadeUp 0.8s 1.05s both;
+  }
+
+  /* Red seal */
+  .seal {
+    position: absolute;
+    bottom: 52px;
+    left: 64px;
+    width: 54px;
+    height: 54px;
+    border: 2px solid var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transform: rotate(-8deg);
+    opacity: 0.7;
+    animation: fadeUp 0.8s 1.1s both;
+  }
+
+  /* ── Photo Album Section ── */
+  .album-section {
+    margin-top: 48px;
+    animation: fadeUp 0.8s 0.9s both;
+  }
+
+  .album-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .album-header-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+
+  .album-header-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .album-subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #9a7d52;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+
+  /* Grid */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .photo-slot {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--parchment);
+    border: 1.5px dashed rgba(184,136,42,0.35);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .photo-slot:hover {
+    border-color: var(--gold);
+    transform: scale(1.02);
+  }
+
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s;
+  }
+
+  .photo-slot .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(184,136,42,0.5);
+    font-family: 'Cormorant Garamond', serif;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .photo-slot .placeholder svg {
+    width: 28px;
+    height: 28px;
+    opacity: 0.6;
+  }
+
+  .photo-slot .placeholder span {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    font-style: italic;
+  }
+
+  .photo-slot.has-photo .placeholder {
+    opacity: 0;
+  }
+
+  /* Caption beneath each photo */
+  .photo-caption-input {
+    width: 100%;
+    margin-top: 5px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(184,136,42,0.25);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 12px;
+    color: var(--deep);
+    text-align: center;
+    padding: 3px 4px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .photo-caption-input::placeholder { color: rgba(184,136,42,0.4); font-style: italic; }
+  .photo-caption-input:focus { border-bottom-color: var(--gold); }
+
+  .photo-slot-wrap { display: flex; flex-direction: column; }
+
+  /* Remove button */
+  .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background: rgba(26,18,8,0.65);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .photo-slot.has-photo:hover .remove-btn { display: flex; }
+
+  /* Hidden file input */
+  .file-input { display: none; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,7,3,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: lbIn 0.2s ease both;
+  }
+  .lightbox.open { display: flex; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+  .pw-input.shake { animation: shake 0.4s ease; }
+
+  @keyframes lbIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    box-shadow: 0 0 0 1px var(--gold), 0 20px 60px rgba(0,0,0,0.8);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: 1px solid rgba(184,136,42,0.4);
+    color: var(--gold);
+    font-size: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 520px) {
+    .inner { padding: 44px 32px 40px; }
+    .title { font-size: 30px; }
+    .seal { display: none; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER PAGE ═══════════ -->
+<div id="cover">
+  <div class="cover-border"></div>
+  <div class="cover-border-inner"></div>
+  <div class="cover-corner cover-corner-tl"></div>
+  <div class="cover-corner cover-corner-tr"></div>
+  <div class="cover-corner cover-corner-bl"></div>
+  <div class="cover-corner cover-corner-br"></div>
+
+  <div class="cover-content">
+    <div class="cover-eyebrow">A Love Letter · 情書</div>
+    <div class="cover-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <div class="cover-title">
+      for my lovely wife<br>and partner in crime,
+      <strong>Sandy</strong>
+    </div>
+
+    <div class="cover-divider">
+      <div class="cover-divider-line"></div>
+      <div class="cover-divider-dot">❧</div>
+      <div class="cover-divider-line"></div>
+    </div>
+
+    <div class="cover-lock">
+      <div class="cover-lock-icon">🔒</div>
+      <div class="pw-label">Enter Password · 請輸入密碼</div>
+      <div class="pw-row">
+        <input class="pw-input" id="pwInput" type="password" placeholder="· · · · · ·" autocomplete="off">
+        <button class="pw-btn" id="pwBtn">Open ↗</button>
+      </div>
+      <div class="pw-error" id="pwError">密碼不正確 · Incorrect password</div>
+    </div>
+  </div>
+
+  <div class="cover-footer">六週年紀念 · Sixth Wedding Anniversary · 2026</div>
+</div>
+
+<!-- ═══════════ LETTER (hidden until password correct) ═══════════ -->
+<div id="letter">
+<div class="page">
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="inner">
+
+    <div class="header">
+      <div class="year-badge">Six Years · 六週年</div>
+      <div class="title">結婚六週年紀念</div>
+      <div class="title-en">A Letter of Love & Gratitude</div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">❧</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="salutation">親愛的，</div>
+
+    <div class="body-text">
+      <p>
+        轉眼間，我們已經攜手走過了六個年頭。回望這一年，心中百感交集，既有感恩，也有感動。
+      </p>
+    </div>
+
+    <div class="milestones">
+
+      <div class="milestone">
+        <div class="milestone-num">一</div>
+        <div class="milestone-text">
+          我們的兒子 <strong>Eason</strong> 開始上幼兒園了。看著他邁出人生中的第一步，走進那扇小小的大門，心裡既驕傲又不捨。這是我們一起創造的小生命，正在慢慢展開屬於他自己的世界。
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-num">二</div>
+        <div class="milestone-text">
+          這一年我們也有過爭吵，有過摩擦，但每一次，我們都找到了彼此，重新和好。我知道，我們都承受著很大的壓力，正因如此，我更加珍惜——我們選擇了理解，而不是放棄。
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-num">三</div>
+        <div class="milestone-text">
+          雖然屬於我們兩個人的時光少了，但我們一家三口共同經歷的歡笑與溫暖，已經填滿了每一個平凡的日子。那些在一起的片刻，就是最好的幸福。
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-num">四</div>
+        <div class="milestone-text">
+          今年我接受了腦部的煙霧病手術。在那段最艱難的日子裡，你一直陪在我和 Eason 的身邊。你的手，是我最大的安慰。謝謝你，從未離開。
+        </div>
+      </div>
+
+    </div>
+
+    <div class="closing-text">
+      <p>
+        我期待著未來無數個年頭，與你繼續同行。今年秋天，我已經迫不及待地想帶著 Eason 一起去「不給糖就搗蛋」了——想到那個畫面，嘴角就忍不住上揚。
+      </p>
+      <p>
+        謝謝你這六年的陪伴，謝謝你在最難的時候選擇留下來。愛你，現在，也是以後許許多多個六年。
+      </p>
+    </div>
+
+    <div class="signature">
+      <div class="signature-line">永遠愛你的</div>
+      <div class="signature-name">你的另一半</div>
+    </div>
+
+    <div class="footer-divider">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">✦</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="date-stamp">二〇二六年五月 · May 2026</div>
+
+    <div class="seal">囍</div>
+
+    <!-- Photo Album -->
+    <div class="album-section">
+      <div class="album-header">
+        <div class="album-header-line"></div>
+        <div class="album-header-label">我們的回憶 · Our Memories</div>
+        <div class="album-header-line"></div>
+      </div>
+      <div class="album-subtitle">回憶定格在這裡 · Memories captured here</div>
+      <div class="photo-grid" id="photoGrid"></div>
+    </div>
+
+  </div>
+</div><!-- /.page -->
+</div><!-- /#letter -->
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+
+<script>
+  // ── Password ──────────────────────────────────────────
+  const PASSWORD = 'sandy';   // ← change this to whatever you like
+
+  const cover   = document.getElementById('cover');
+  const letter  = document.getElementById('letter');
+  const pwInput = document.getElementById('pwInput');
+  const pwBtn   = document.getElementById('pwBtn');
+  const pwError = document.getElementById('pwError');
+
+  function tryUnlock() {
+    if (pwInput.value === PASSWORD) {
+      cover.classList.add('exiting');
+      setTimeout(function() {
+        cover.style.display = 'none';
+        letter.style.display = 'block';
+        letter.style.animation = 'unfold 0.9s cubic-bezier(0.22,1,0.36,1) both';
+      }, 520);
+    } else {
+      pwError.classList.add('show');
+      pwInput.value = '';
+      pwInput.classList.add('shake');
+      setTimeout(function() {
+        pwError.classList.remove('show');
+        pwInput.classList.remove('shake');
+      }, 1800);
+    }
+  }
+
+  pwBtn.addEventListener('click', tryUnlock);
+  pwInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock();
+  });
+
+  // ── Photo album ───────────────────────────────────────
+  // Images are loaded from the images/ folder.
+  // Add your JPEGs there named: photo1.jpg, photo2.jpg, ... photo6.jpg
+  const IMAGE_FILES = [
+    'images/photo1.jpg',
+    'images/photo2.jpg',
+    'images/photo3.jpg',
+    'images/photo4.jpg',
+    'images/photo5.jpg',
+    'images/photo6.jpg'
+  ];
+
+  const CAPTIONS = [
+    '我們一家 · Our family',
+    'Eason 第一天上幼兒園 · First day of daycare',
+    '一起的時光 · Moments together',
+    '手術後 · After the surgery',
+    '快樂時光 · Happy times',
+    '期待萬聖節 · Halloween ahead 🎃'
+  ];
+
+  const grid = document.getElementById('photoGrid');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbClose = document.getElementById('lbClose');
+
+  IMAGE_FILES.forEach(function(src, i) {
+    const wrap = document.createElement('div');
+    wrap.className = 'photo-slot-wrap';
+
+    const slot = document.createElement('div');
+    slot.className = 'photo-slot';
+
+    const img = document.createElement('img');
+    img.alt = CAPTIONS[i] || '';
+    img.style.display = 'none';
+
+    // Try loading from images/ folder
+    img.onload = function() {
+      img.style.display = 'block';
+      slot.classList.add('has-photo');
+      placeholder.style.display = 'none';
+    };
+    img.onerror = function() {
+      // Image not found — show placeholder
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+      slot.classList.remove('has-photo');
+    };
+    img.src = src;
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+    placeholder.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">' +
+        '<rect x="3" y="3" width="18" height="18" rx="2"/>' +
+        '<circle cx="8.5" cy="8.5" r="1.5"/>' +
+        '<path d="M21 15l-5-5L5 21"/>' +
+      '</svg>' +
+      '<span style="font-size:11px;opacity:0.6">' + src + '</span>';
+
+    slot.appendChild(placeholder);
+    slot.appendChild(img);
+
+    // Click to open lightbox if image loaded
+    slot.addEventListener('click', function() {
+      if (slot.classList.contains('has-photo')) {
+        lbImg.src = img.src;
+        lightbox.classList.add('open');
+      }
+    });
+
+    const caption = document.createElement('input');
+    caption.type = 'text';
+    caption.className = 'photo-caption-input';
+    caption.value = CAPTIONS[i] || '';
+    caption.placeholder = '寫下這一刻…';
+
+    wrap.appendChild(slot);
+    wrap.appendChild(caption);
+    grid.appendChild(wrap);
+  });
+
+  lbClose.addEventListener('click', function() { lightbox.classList.remove('open'); });
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
+  });
+</script>
+</body>
+</html>
