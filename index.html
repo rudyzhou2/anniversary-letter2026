@@ -29,6 +29,97 @@
     font-family: 'Noto Serif SC', serif;
   }
 
+  /* ── Quiz Page ── */
+  #quiz {
+    max-width: 680px;
+    width: 100%;
+    min-height: 88vh;
+    background: var(--ink);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 0 1px var(--gold), 0 0 0 8px var(--ink), 0 0 0 9px var(--gold), 0 40px 80px rgba(0,0,0,0.7);
+    overflow: hidden;
+  }
+
+  #quiz::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(184,136,42,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(139,32,32,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .quiz-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--cream);
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .quiz-btn {
+    background: transparent;
+    border: 1px solid rgba(184,136,42,0.3);
+    color: var(--cream);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s, color 0.2s;
+    text-align: left;
+  }
+
+  .quiz-btn:hover {
+    background: rgba(184,136,42,0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .quiz-btn.wrong {
+    border-color: #8b2020;
+    color: #b85050;
+    animation: shake 0.4s ease;
+    pointer-events: none;
+  }
+
+  .quiz-btn.correct {
+    border-color: var(--gold);
+    background: rgba(184,136,42,0.15);
+    color: var(--gold-light);
+    pointer-events: none;
+  }
+
+  .quiz-feedback {
+    margin-top: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-align: center;
+    min-height: 24px;
+    transition: opacity 0.3s;
+  }
+
+  #quiz.exiting { animation: coverExit 0.55s cubic-bezier(0.4,0,1,1) forwards; }
+
   /* ── Cover Page ── */
   #cover {
     max-width: 680px;
@@ -683,7 +774,41 @@
   <div class="cover-footer">六周年纪念 · Sixth Wedding Anniversary · 2026</div>
 </div>
 
-<!-- ═══════════ LETTER (hidden until password correct) ═══════════ -->
+<!-- ═══════════ QUIZ PAGE ═══════════ -->
+<div id="quiz">
+  <div class="cover-border"></div>
+  <div class="cover-border-inner"></div>
+  <div class="cover-corner cover-corner-tl"></div>
+  <div class="cover-corner cover-corner-tr"></div>
+  <div class="cover-corner cover-corner-bl"></div>
+  <div class="cover-corner cover-corner-br"></div>
+
+  <div class="cover-content" style="gap:0">
+    <div class="cover-eyebrow">A Little Quiz · 小测验</div>
+    <div class="cover-ornament">💕</div>
+
+    <div class="quiz-question">
+      What is Rudy's favourite<br>Sandy body part?
+    </div>
+
+    <div class="quiz-grid" id="quizGrid">
+      <button class="quiz-btn" data-idx="1">👁️ Eyes</button>
+      <button class="quiz-btn" data-idx="2">👃 Nose holes</button>
+      <button class="quiz-btn" data-idx="3">🦶 Feet</button>
+      <button class="quiz-btn" data-idx="4">🍑 Butt</button>
+      <button class="quiz-btn" data-idx="5">🖐️ Fingers</button>
+      <button class="quiz-btn" data-idx="6">🤷 Armpit</button>
+      <button class="quiz-btn" data-idx="7">🌸 Little sister</button>
+      <button class="quiz-btn" data-idx="8">👂 Ears</button>
+    </div>
+
+    <div class="quiz-feedback" id="quizFeedback"></div>
+  </div>
+
+  <div class="cover-footer">六周年纪念 · Sixth Wedding Anniversary · 2026</div>
+</div>
+
+<!-- ═══════════ LETTER (hidden until quiz correct) ═══════════ -->
 <div id="letter">
 <div class="page">
   <div class="corner corner-tl"></div>
@@ -803,19 +928,24 @@
   const PASSWORD_HASH = 'MjAyMDA1MjQ='; // base64 encoded
 
   const cover   = document.getElementById('cover');
+  const quiz    = document.getElementById('quiz');
   const letter  = document.getElementById('letter');
   const pwInput = document.getElementById('pwInput');
   const pwBtn   = document.getElementById('pwBtn');
   const pwError = document.getElementById('pwError');
 
+  function showPage(hideEl, showEl) {
+    hideEl.classList.add('exiting');
+    setTimeout(function() {
+      hideEl.style.display = 'none';
+      showEl.style.display = 'flex';
+      showEl.style.animation = 'unfold 0.9s cubic-bezier(0.22,1,0.36,1) both';
+    }, 520);
+  }
+
   function tryUnlock() {
     if (btoa(pwInput.value) === PASSWORD_HASH) {
-      cover.classList.add('exiting');
-      setTimeout(function() {
-        cover.style.display = 'none';
-        letter.style.display = 'block';
-        letter.style.animation = 'unfold 0.9s cubic-bezier(0.22,1,0.36,1) both';
-      }, 520);
+      showPage(cover, quiz);
     } else {
       pwError.classList.add('show');
       pwInput.value = '';
@@ -830,6 +960,37 @@
   pwBtn.addEventListener('click', tryUnlock);
   pwInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') tryUnlock();
+  });
+
+  // ── Quiz ─────────────────────────────────────────────
+  const CORRECT_IDX = '2';
+  const quizBtns    = document.querySelectorAll('.quiz-btn');
+  const quizFeedback = document.getElementById('quizFeedback');
+
+  quizBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (btn.dataset.idx === CORRECT_IDX) {
+        btn.classList.add('correct');
+        quizFeedback.textContent = '✨ That\'s right! Rudy loves those nose holes 👃';
+        quizBtns.forEach(function(b) { b.style.pointerEvents = 'none'; });
+        setTimeout(function() {
+          quiz.classList.add('exiting');
+          setTimeout(function() {
+            quiz.style.display = 'none';
+            letter.style.display = 'block';
+            letter.style.animation = 'unfold 0.9s cubic-bezier(0.22,1,0.36,1) both';
+          }, 520);
+        }, 1400);
+      } else {
+        btn.classList.add('wrong');
+        quizFeedback.textContent = 'Hmm, try again! 🤔';
+        setTimeout(function() {
+          btn.classList.remove('wrong');
+          btn.style.pointerEvents = '';
+          quizFeedback.textContent = '';
+        }, 1200);
+      }
+    });
   });
 
   // ── Photo album ───────────────────────────────────────
