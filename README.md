@@ -4,20 +4,14 @@ A private, password-protected anniversary letter for Sandy.
 
 ## Setup
 
-1. Add your photos to the `images/` folder named exactly:
-   - `photo1.jpg`
-   - `photo2.jpg`
-   - `photo3.jpg`
-   - `photo4.jpg`
-   - `photo5.jpg`
-   - `photo6.jpg`
+Add your photos to the `images/` folder named exactly:
 
-2. Open `index.html` in a browser — or host it via GitHub Pages.
+- `photo1.jpg` through `photo10.jpg`
 
 ## Password
 
 Default password: `sandy`
-To change it, edit line `const PASSWORD = 'sandy';` in `index.html`.
+To change it, edit `const PASSWORD = 'sandy';` in `index.html`.
 
 ## GitHub Pages
 

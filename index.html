@@ -502,7 +502,7 @@
   /* Grid */
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
   }
 
@@ -558,27 +558,6 @@
   .photo-slot.has-photo .placeholder {
     opacity: 0;
   }
-
-  /* Caption beneath each photo */
-  .photo-caption-input {
-    width: 100%;
-    margin-top: 5px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(184,136,42,0.25);
-    font-family: 'Noto Serif TC', serif;
-    font-size: 12px;
-    color: var(--deep);
-    text-align: center;
-    padding: 3px 4px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .photo-caption-input::placeholder { color: rgba(184,136,42,0.4); font-style: italic; }
-  .photo-caption-input:focus { border-bottom-color: var(--gold); }
-
-  .photo-slot-wrap { display: flex; flex-direction: column; }
 
   /* Remove button */
   .remove-btn {
@@ -848,23 +827,18 @@
 
   // ── Photo album ───────────────────────────────────────
   // Images are loaded from the images/ folder.
-  // Add your JPEGs there named: photo1.jpg, photo2.jpg, ... photo6.jpg
+  // Add your JPEGs there named: photo1.jpg, photo2.jpg, ... photo10.jpg
   const IMAGE_FILES = [
     'images/photo1.jpg',
     'images/photo2.jpg',
     'images/photo3.jpg',
     'images/photo4.jpg',
     'images/photo5.jpg',
-    'images/photo6.jpg'
-  ];
-
-  const CAPTIONS = [
-    '我們一家 · Our family',
-    'Eason 第一天上幼兒園 · First day of daycare',
-    '一起的時光 · Moments together',
-    '手術後 · After the surgery',
-    '快樂時光 · Happy times',
-    '期待萬聖節 · Halloween ahead 🎃'
+    'images/photo6.jpg',
+    'images/photo7.jpg',
+    'images/photo8.jpg',
+    'images/photo9.jpg',
+    'images/photo10.jpg'
   ];
 
   const grid = document.getElementById('photoGrid');
@@ -872,30 +846,13 @@
   const lbImg = document.getElementById('lbImg');
   const lbClose = document.getElementById('lbClose');
 
-  IMAGE_FILES.forEach(function(src, i) {
-    const wrap = document.createElement('div');
-    wrap.className = 'photo-slot-wrap';
-
+  IMAGE_FILES.forEach(function(src) {
     const slot = document.createElement('div');
     slot.className = 'photo-slot';
 
     const img = document.createElement('img');
-    img.alt = CAPTIONS[i] || '';
+    img.alt = '';
     img.style.display = 'none';
-
-    // Try loading from images/ folder
-    img.onload = function() {
-      img.style.display = 'block';
-      slot.classList.add('has-photo');
-      placeholder.style.display = 'none';
-    };
-    img.onerror = function() {
-      // Image not found — show placeholder
-      img.style.display = 'none';
-      placeholder.style.display = 'flex';
-      slot.classList.remove('has-photo');
-    };
-    img.src = src;
 
     const placeholder = document.createElement('div');
     placeholder.className = 'placeholder';
@@ -907,10 +864,21 @@
       '</svg>' +
       '<span style="font-size:11px;opacity:0.6">' + src + '</span>';
 
+    img.onload = function() {
+      img.style.display = 'block';
+      slot.classList.add('has-photo');
+      placeholder.style.display = 'none';
+    };
+    img.onerror = function() {
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+      slot.classList.remove('has-photo');
+    };
+    img.src = src;
+
     slot.appendChild(placeholder);
     slot.appendChild(img);
 
-    // Click to open lightbox if image loaded
     slot.addEventListener('click', function() {
       if (slot.classList.contains('has-photo')) {
         lbImg.src = img.src;
@@ -918,15 +886,7 @@
       }
     });
 
-    const caption = document.createElement('input');
-    caption.type = 'text';
-    caption.className = 'photo-caption-input';
-    caption.value = CAPTIONS[i] || '';
-    caption.placeholder = '寫下這一刻…';
-
-    wrap.appendChild(slot);
-    wrap.appendChild(caption);
-    grid.appendChild(wrap);
+    grid.appendChild(slot);
   });
 
   lbClose.addEventListener('click', function() { lightbox.classList.remove('open'); });
